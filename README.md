@@ -11,6 +11,13 @@ ssh -i /path/my-key-pair.pem ec2-user@ec2-198-51-100-1.compute-1.amazonaws.com
 ## 安装 OpenVPN
 [OpenVPN Downloads](https://openvpn.net/index.php/open-source/downloads.html)
 
+### Linux (yum)
+
+```
+sudo yum install -y openvpn
+```
+
+
 ### Linux (without RPM)
 
 ```
@@ -27,35 +34,84 @@ sudo make install
 
 ### Linux (using RPM package)
 
-1. To check if `rpm-build` installed:
+To check if `rpm-build` installed:
 
-  ```
-  rpm rpm-build -q
-  ```
+```
+rpm rpm-build -q
+```
 
-  Install `rpm-build`:
+Install `rpm-build`:
 
-  ```
-  sudo yum install rpm-build
-  sudo yum install openssl-devel
-  sudo yum install lzo-devel
-  sudo yum install pam-devel
-  ```
+```
+sudo yum install rpm-build
+```
 
-2. Build your own RPM file, if you don't have it:
+Dependencies:
 
-  ```
-  rpmbuild -tb openvpn-[version].tar.gz
-  ```
+```
+sudo yum install openssl-devel
+sudo yum install lzo-devel
+sudo yum install pam-devel
+```
 
-3. Once you have the .rpm file, you can install it with the usual
+Build your own RPM file, if you don't have it:
 
-  ```
-  rpm -ivh openvpn-[details].rpm
-  ```
+```
+rpmbuild -tb openvpn-[version].tar.gz
+```
 
-  or upgrade an existing installation with
+Once you have the .rpm file, you can install it with the usual
 
-  ```
-  rpm -Uvh openvpn-[details].rpm
-  ```
+```
+rpm -ivh openvpn-[details].rpm
+```
+
+or upgrade an existing installation with
+
+```
+rpm -Uvh openvpn-[details].rpm
+```
+
+## Static key configuration
+
+Generate a static key:
+
+```
+openvpn --genkey --secret static.key
+```
+
+Copy the static key to both client and server.
+
+Server configuration file:
+
+```
+dev tun
+ifconfig 10.8.0.1 10.8.0.2
+secret static.key
+```
+
+On server side, use a command to NAT the VPN client to the Internet:
+
+```
+iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
+```
+
+Start `openvpn` server:
+
+```
+sudo openvpn server.conf
+```
+
+Client configuration file:
+
+```
+remote myremote.mydomain
+dev tun
+ifconfig 10.8.0.2 10.8.0.1
+secret static.key
+redirect-gateway def1
+```
+
+Use Tunnelblick to open `openvpn` client.
+
+([Route all client traffic through the VPN](https://openvpn.net/index.php/open-source/documentation/howto.html#redirect))
