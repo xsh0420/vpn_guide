@@ -11,9 +11,29 @@ ssh -i /path/my-key-pair.pem ec2-user@ec2-198-51-100-1.compute-1.amazonaws.com
 ## 安装 OpenVPN
 [OpenVPN Downloads](https://openvpn.net/index.php/open-source/downloads.html)
 
+### Linux (without RPM)
+
+```
+tar xfz openvpn-[version].tar.gz
+```
+
+Then `cd` to the top-level directory:
+
+```
+./configure
+make
+sudo make install
+```
+
 ### Linux (using RPM package)
 
-1. Install `rpm-build`
+1. To check if `rpm-build` installed:
+
+  ```
+  rpm rpm-build -q
+  ```
+
+  Install `rpm-build`:
 
   ```
   sudo yum install rpm-build
@@ -30,8 +50,12 @@ ssh -i /path/my-key-pair.pem ec2-user@ec2-198-51-100-1.compute-1.amazonaws.com
 
 3. Once you have the .rpm file, you can install it with the usual
 
-    rpm -ivh openvpn-[details].rpm
+  ```
+  rpm -ivh openvpn-[details].rpm
+  ```
 
-or upgrade an existing installation with
+  or upgrade an existing installation with
 
-    rpm -Uvh openvpn-[details].rpm
+  ```
+  rpm -Uvh openvpn-[details].rpm
+  ```
