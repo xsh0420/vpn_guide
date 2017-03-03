@@ -125,8 +125,8 @@ Refer to [Easy-RSA 3 Quickstart README](https://github.com/OpenVPN/easy-rsa/blob
 
 1. Choose a system to act as your CA and create a new PKI and CA:
 
-      ./easyrsa init-pki
-      ./easyrsa build-ca
+        ./easyrsa init-pki
+        ./easyrsa build-ca
 
 2. On the system that is requesting a certificate, init its own PKI and generate a keypair/request. Note that the init-pki is used only when this is done on a separate system (or at least a separate PKI dir.) This is the recommended procedure. If you are not using this recommended procedure, skip the next import-req step as well.
 
