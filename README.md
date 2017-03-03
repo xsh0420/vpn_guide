@@ -147,31 +147,31 @@ Refer to [Easy-RSA 3 Quickstart README](https://github.com/OpenVPN/easy-rsa/blob
 
 ### Generate a shared-secret key for tls-auth
 
-        openvpn --genkey --secret ta.key
+    openvpn --genkey --secret ta.key
 
 ### Use unified form in the profile
 
-        <ca>
-        -----BEGIN CERTIFICATE-----
-        MIIBszCCARygAwIBAgIE...
-        . . .
-        /NygscQs1bxBSZ0X3KRk...
-        Lq9iNBNgWg==
-        -----END CERTIFICATE-----
-        </ca>
+    <ca>
+    -----BEGIN CERTIFICATE-----
+    MIIBszCCARygAwIBAgIE...
+    . . .
+    /NygscQs1bxBSZ0X3KRk...
+    Lq9iNBNgWg==
+    -----END CERTIFICATE-----
+    </ca>
 
-        <cert>
-        -----BEGIN CERTIFICATE-----
-        . . .
-        </cert>
+    <cert>
+    -----BEGIN CERTIFICATE-----
+    . . .
+    </cert>
 
-        <key>
-        -----BEGIN RSA PRIVATE KEY-----
-        . . .
-        </key>
+    <key>
+    -----BEGIN RSA PRIVATE KEY-----
+    . . .
+    </key>
 
-        key-direction 1
-        <tls-auth>
-        -----BEGIN OpenVPN Static key V1-----
-        . . .
-        </tls-auth>
+    key-direction 1
+    <tls-auth>
+    -----BEGIN OpenVPN Static key V1-----
+    . . .
+    </tls-auth>
