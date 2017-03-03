@@ -130,20 +130,16 @@ Refer to [Easy-RSA 3 Quickstart README](https://github.com/OpenVPN/easy-rsa/blob
 
 2. On the system that is requesting a certificate, init its own PKI and generate a keypair/request. Note that the init-pki is used only when this is done on a separate system (or at least a separate PKI dir.) This is the recommended procedure. If you are not using this recommended procedure, skip the next import-req step as well.
 
-      ./easyrsa init-pki
-      ./easyrsa gen-req EntityName
+        ./easyrsa init-pki
+        ./easyrsa gen-req EntityName
 
 3. Transport the request (.req file) to the CA system and import it. The name given here is arbitrary and only used to name the request file.
 
-  ```
-  ./easyrsa import-req /tmp/path/to/import.req EntityName
-  ```
+        ./easyrsa import-req /tmp/path/to/import.req EntityName
 
 4. Sign the request as the correct type. This example uses a client type:
 
-  ```
-  ./easyrsa sign-req client EntityName
-  ```
+        ./easyrsa sign-req client EntityName
 
 5. Transport the newly signed certificate to the requesting entity. This entity may also need the CA cert (ca.crt) unless it had a prior copy.
 
@@ -151,35 +147,31 @@ Refer to [Easy-RSA 3 Quickstart README](https://github.com/OpenVPN/easy-rsa/blob
 
 ### Generate a shared-secret key for tls-auth
 
-  ```
-  openvpn --genkey --secret ta.key
-  ```
+        openvpn --genkey --secret ta.key
 
 ### Use unified form in the profile
 
-  ```
-  <ca>
-  -----BEGIN CERTIFICATE-----
-  MIIBszCCARygAwIBAgIE...
-  . . .
-  /NygscQs1bxBSZ0X3KRk...
-  Lq9iNBNgWg==
-  -----END CERTIFICATE-----
-  </ca>
+        <ca>
+        -----BEGIN CERTIFICATE-----
+        MIIBszCCARygAwIBAgIE...
+        . . .
+        /NygscQs1bxBSZ0X3KRk...
+        Lq9iNBNgWg==
+        -----END CERTIFICATE-----
+        </ca>
 
-  <cert>
-  -----BEGIN CERTIFICATE-----
-  . . .
-  </cert>
+        <cert>
+        -----BEGIN CERTIFICATE-----
+        . . .
+        </cert>
 
-  <key>
-  -----BEGIN RSA PRIVATE KEY-----
-  . . .
-  </key>
+        <key>
+        -----BEGIN RSA PRIVATE KEY-----
+        . . .
+        </key>
 
-  key-direction 1
-  <tls-auth>
-  -----BEGIN OpenVPN Static key V1-----
-  . . .
-  </tls-auth>
-  ```
+        key-direction 1
+        <tls-auth>
+        -----BEGIN OpenVPN Static key V1-----
+        . . .
+        </tls-auth>
