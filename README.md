@@ -99,7 +99,7 @@ iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
 Start `openvpn` server:
 
 ```
-sudo openvpn server.conf
+sudo openvpn --config server.conf --daemon
 ```
 
 Client configuration file:
@@ -112,6 +112,13 @@ secret static.key
 redirect-gateway def1
 ```
 
-Use Tunnelblick to open `openvpn` client.
+Use [Tunnelblick](https://tunnelblick.net/) to open `openvpn` client.
 
-([Route all client traffic through the VPN](https://openvpn.net/index.php/open-source/documentation/howto.html#redirect))
+([OpenVPN HOWTO - Route all client traffic through the VPN](https://openvpn.net/index.php/open-source/documentation/howto.html#redirect))
+
+
+## Setting up your own Certificate Authority (CA) and generating certificates and keys for an OpenVPN server and multiple clients
+
+### Easy-RSA 3 Setup
+
+Refer to [](https://github.com/OpenVPN/easy-rsa/blob/master/README.quickstart.md)
