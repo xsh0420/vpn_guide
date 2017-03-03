@@ -72,7 +72,7 @@ or upgrade an existing installation with
 rpm -Uvh openvpn-[details].rpm
 ```
 
-## Static key configuration
+## a. Static key configuration
 
 Generate a static key:
 
@@ -117,7 +117,7 @@ Use [Tunnelblick](https://tunnelblick.net/) to open `openvpn` client.
 ([OpenVPN HOWTO - Route all client traffic through the VPN](https://openvpn.net/index.php/open-source/documentation/howto.html#redirect))
 
 
-## PKI Infrastructure
+## b. PKI Infrastructure
 
 ### Easy-RSA 3 Setup
 
@@ -149,6 +149,12 @@ Refer to [Easy-RSA 3 Quickstart README](https://github.com/OpenVPN/easy-rsa/blob
 
     openvpn --genkey --secret ta.key
 
+Copy `ta.key` to both sides.
+
+### Generate Diffie hellman parameters (server side):
+
+    openssl dhparam -out dh2048.pem 2048
+
 ### Use unified form in the profile
 
     <ca>
@@ -175,3 +181,10 @@ Refer to [Easy-RSA 3 Quickstart README](https://github.com/OpenVPN/easy-rsa/blob
     -----BEGIN OpenVPN Static key V1-----
     . . .
     </tls-auth>
+
+`key-direction 0` for server.
+
+
+### Start server using `--askpass` option
+
+    sudo openvpn --config server.ovpn --daemon --askpass key.pass
