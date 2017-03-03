@@ -1,4 +1,4 @@
-# Setup VPN
+# Setup AWS VPN
 ## Launch EC2 Instance
 Set security group
 
@@ -90,11 +90,14 @@ ifconfig 10.8.0.1 10.8.0.2
 secret static.key
 ```
 
-On server side, use a command to NAT the VPN client to the Internet:
+At server side:
 
-```
-iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
-```
+    sudo modprobe iptable_nat
+    echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
+
+And use a command to NAT the VPN client to the Internet:
+
+    iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
 
 Start `openvpn` server:
 
@@ -155,7 +158,7 @@ Copy `ta.key` to both sides.
 
     openssl dhparam -out dh2048.pem 2048
 
-### Use unified form in the profile
+### Convert to unified form in the profile
 
     <ca>
     -----BEGIN CERTIFICATE-----
@@ -185,6 +188,17 @@ Copy `ta.key` to both sides.
 `key-direction 0` for server.
 
 
-### Start server using `--askpass` option
+### Start server
+
+At server side:
+
+    sudo modprobe iptable_nat
+    echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
+
+And use a command to NAT the VPN client to the Internet:
+
+    iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
+
+Create password file, then use `--askpass` option to start openvpn daemon:
 
     sudo openvpn --config server.ovpn --daemon --askpass key.pass
