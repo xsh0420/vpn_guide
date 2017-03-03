@@ -190,9 +190,12 @@ Copy `ta.key` to both sides.
 
 ### Start server
 
-At server side:
+At server side, add NAT table:
 
     sudo modprobe iptable_nat
+
+Enable IP forwarding:
+
     echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
 
 And use a command to NAT the VPN client to the Internet:
