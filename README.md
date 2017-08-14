@@ -205,3 +205,7 @@ And use a command to NAT the VPN client to the Internet:
 Create password file, then use `--askpass` option to start openvpn daemon:
 
     sudo openvpn --config server.ovpn --daemon --askpass key.pass
+
+### Start client
+
+Remember to change the server's IP address in the client profile.
